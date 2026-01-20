@@ -1,5 +1,5 @@
 import { DeleteOutlined, FormOutlined } from '@ant-design/icons';
-import { useModel } from 'umi';
+import { useModel } from '@/models/todolist';
 
 const TodoItem = (props: { record: TodoList.TodoItem; index: number }) => {
 	const { getDataTodo, setVisible, setTodoItem, setIsEdit } = useModel('todolist');

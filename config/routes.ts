@@ -43,6 +43,13 @@
 		component: './TodoList',
 	},
 
+	{
+		path: '/quan-ly-san-pham',
+		name: 'Quản lý sản phẩm',   
+		component: './ProductManager', 
+		icon: 'TableOutlined',     
+	},
+
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
