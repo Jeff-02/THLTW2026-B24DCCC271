@@ -50,6 +50,13 @@
 		icon: 'TableOutlined',     
 	},
 
+	{
+		path: '/quan-ly-don-hang',
+		name: 'Quản lý Đơn hàng',   
+		component: './QuanLyDonHang', 
+		icon: 'ShoppingCartOutlined',     
+	},
+
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',

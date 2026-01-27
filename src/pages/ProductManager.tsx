@@ -141,7 +141,7 @@ const ProductManager: React.FC = () => {
 
   return (
     <Card title="Quản lý Sản phẩm" bordered={false}>
-      {/* 4. Thanh công cụ: Tìm kiếm và Nút thêm */}
+      {}
       <Space style={{ marginBottom: 16, justifyContent: 'space-between', width: '100%' }}>
         <Input.Search
           placeholder="Tìm kiếm theo tên sản phẩm..."
@@ -155,7 +155,7 @@ const ProductManager: React.FC = () => {
         </Button>
       </Space>
 
-      {/* 5. Bảng dữ liệu */}
+      {}
       <Table 
         columns={columns} 
         dataSource={filteredData} 
@@ -163,7 +163,7 @@ const ProductManager: React.FC = () => {
         pagination={{ pageSize: 5 }} 
       />
 
-      {/* 6. Modal Form Thêm mới */}
+      {}
       <Modal
         title="Thêm sản phẩm mới"
         visible={isModalOpen}
@@ -186,15 +186,15 @@ const ProductManager: React.FC = () => {
             rules={[
               { 
                 required: true, 
-                message: 'Tên sản phẩm là bắt buộc!' 
+                message: 'Tên sản phẩm là bắt buộc' 
               },
               {
                 min: 3,
-                message: 'Tên sản phẩm phải có ít nhất 3 ký tự!'
+                message: 'Tên sản phẩm phải có ít nhất 3 ký tự'
               },
               {
                 max: 100,
-                message: 'Tên sản phẩm không được vượt quá 100 ký tự!'
+                message: 'Tên sản phẩm không được vượt quá 100 ký tự'
               }
             ]}
           >
@@ -211,12 +211,12 @@ const ProductManager: React.FC = () => {
             rules={[
               { 
                 required: true, 
-                message: 'Giá là bắt buộc!' 
+                message: 'Giá là bắt buộc' 
               },
               {
                 type: 'number',
                 min: 1,
-                message: 'Giá phải là số dương (tối thiểu 1)!'
+                message: 'Giá phải là số dương'
               }
             ]}
           >
@@ -236,12 +236,12 @@ const ProductManager: React.FC = () => {
             rules={[
               { 
                 required: true, 
-                message: 'Số lượng là bắt buộc!' 
+                message: 'Số lượng là bắt buộc' 
               },
               {
                 type: 'number',
                 min: 1,
-                message: 'Số lượng phải là số nguyên dương (tối thiểu 1)!'
+                message: 'Số lượng phải là số nguyên dương'
               }
             ]}
           >
