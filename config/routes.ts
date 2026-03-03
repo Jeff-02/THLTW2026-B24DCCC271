@@ -44,18 +44,15 @@
 	},
 
 	{
-		path: '/quan-ly-san-pham',
-		name: 'Quản lý sản phẩm',   
-		component: './ProductManager', 
-		icon: 'TableOutlined',     
-	},
-
-	{
-		path: '/quan-ly-don-hang',
-		name: 'Quản lý Đơn hàng',   
-		component: './QuanLyDonHang', 
-		icon: 'ShoppingCartOutlined',     
-	},
+        path: '/bai-1',
+        name: 'Bài 1',   
+        component: './bai1', 
+    },
+    {
+        path: '/bai-2',
+        name: 'Bài 2',   
+        component: './bai2', 
+    },
 
 	// DANH MUC HE THONG
 	// {
