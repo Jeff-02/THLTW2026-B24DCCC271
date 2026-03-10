@@ -1,158 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import { Card, InputNumber, Button, List, Typography, Space, Alert, message } from 'antd';
-import { ReloadOutlined, SendOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Card, Button, Typography, Space, Table, Tag, message } from 'antd';
 
 const { Title, Text } = Typography;
 
-interface GuessRecord {
-  number: number;
-  feedback: string;
-  type: 'success' | 'warning' | 'danger' | 'secondary'; 
+interface VanDau {
+  lan: number;
+  nguoiChon: string;
+  mayChon: string;
+  ketQua: string;
 }
 
 const Bai1: React.FC = () => {
-  const [targetNumber, setTargetNumber] = useState<number>(0);
-  const [currentGuess, setCurrentGuess] = useState<number | null>(null);
-  const [history, setHistory] = useState<GuessRecord[]>([]);
-  const [gameOver, setGameOver] = useState<boolean>(false);
-  const [gameWon, setGameWon] = useState<boolean>(false);
+  const [lichSu, setLichSu] = useState<VanDau[]>([]);
+  const [soTran, setSoTran] = useState(0);
 
-  const initGame = () => {
-    setTargetNumber(Math.floor(Math.random() * 100) + 1);
-    setCurrentGuess(null);
-    setHistory([]);
-    setGameOver(false);
-    setGameWon(false);
+  const danhSachLuaChon = [
+    { id: 'Keo', ten: 'Kéo' },
+    { id: 'Bua', ten: 'Búa' },
+    { id: 'Bao', ten: 'Bao' }
+  ];
+
+  const xuLyChoi = (luaChonCuaNguoi: string) => {
+    let soNgauNhien = Math.floor(Math.random() * 3);
+    let luaChonCuaMay = danhSachLuaChon[soNgauNhien].id;
+
+    let ketQuaVanNay = '';
+
+    if (luaChonCuaNguoi === luaChonCuaMay) {
+      ketQuaVanNay = 'Hòa';
+    } else if (luaChonCuaNguoi === 'Keo' && luaChonCuaMay === 'Bao') {
+      ketQuaVanNay = 'Thắng';
+    } else if (luaChonCuaNguoi === 'Bua' && luaChonCuaMay === 'Keo') {
+      ketQuaVanNay = 'Thắng';
+    } else if (luaChonCuaNguoi === 'Bao' && luaChonCuaMay === 'Bua') {
+      ketQuaVanNay = 'Thắng';
+    } else {
+      ketQuaVanNay = 'Thua';
+    }
+
+    if (ketQuaVanNay === 'Thắng') {
+      message.success('Tuyệt vời! Bạn đã thắng!');
+    } else if (ketQuaVanNay === 'Thua') {
+      message.error('Rất tiếc! Bạn thua rồi!');
+    } else {
+      message.info('Hòa nhau rồi!');
+    }
+
+    let vanMoi: VanDau = {
+      lan: soTran + 1,
+      nguoiChon: luaChonCuaNguoi,
+      mayChon: luaChonCuaMay,
+      ketQua: ketQuaVanNay
+    };
+
+    let mangLichSuMoi = [vanMoi, ...lichSu];
+    setLichSu(mangLichSuMoi);
+    setSoTran(soTran + 1);
   };
 
-  useEffect(() => {
-    initGame();
-  }, []);
-
-  const handleGuess = () => {
-    if (currentGuess === null) {
-      message.warning('Vui lòng nhập một số!');
-      return;
-    }
-
-    if (currentGuess < 1 || currentGuess > 100) {
-      message.warning('Vui lòng nhập số từ 1 đến 100!');
-      return;
-    }
-
-    const currentAttempts = history.length + 1;
-    let feedback = '';
-    let type: GuessRecord['type'] = 'secondary';
-    let isWin = false;
-
-    if (currentGuess === targetNumber) {
-      feedback = 'Chúc mừng! Bạn đã đoán đúng!';
-      type = 'success';
-      isWin = true;
-      setGameWon(true);
-      setGameOver(true);
-    } else if (currentGuess < targetNumber) {
-      feedback = 'Bạn đoán quá thấp!';
-      type = 'warning';
-    } else {
-      feedback = 'Bạn đoán quá cao!';
-      type = 'danger'; 
-    }
-
-    const newRecord: GuessRecord = { number: currentGuess, feedback, type };
-    const newHistory = [newRecord, ...history];
-    setHistory(newHistory);
-    setCurrentGuess(null);
-
-    if (!isWin && currentAttempts >= 10) {
-      setGameOver(true);
-      message.error(`Bạn đã hết lượt! Số đúng là ${targetNumber}`);
-    }
+  const xoaLichSu = () => {
+    setLichSu([]);
+    setSoTran(0);
+    message.success('Đã xóa lịch sử chơi!');
   };
 
   return (
-    <Card 
-      title={<Title level={3} style={{ margin: 0 }}>Bài 1: Trò chơi đoán số</Title>} 
-      bordered={false}
-      style={{ maxWidth: 600, margin: '0 auto' }}
-    >
-      <Alert
-        message="Luật chơi"
-        description="Hệ thống đã chọn một số ngẫu nhiên từ 1 đến 100. Bạn có 10 lượt để đoán số đó."
-        type="info"
-        showIcon
-        style={{ marginBottom: 20 }}
-      />
-
-      {gameOver && !gameWon && (
-        <Alert
-          message="Bạn đã thua cuộc!"
-          description={`Bạn đã hết lượt! Số đúng là ${targetNumber}.`}
-          type="error"
-          showIcon
-          style={{ marginBottom: 20 }}
-        />
-      )}
-
-      {gameWon && (
-        <Alert
-          message="Tuyệt vời!"
-          description={`Chúc mừng! Bạn đã đoán đúng số ${targetNumber} trong ${history.length} lượt.`}
-          type="success"
-          showIcon
-          style={{ marginBottom: 20 }}
-        />
-      )}
-
-      <Space style={{ marginBottom: 24, display: 'flex', width: '100%' }}>
-        <InputNumber
-          placeholder="Nhập số từ 1 - 100"
-          min={1}
-          max={100}
-          value={currentGuess}
-          onChange={(val) => setCurrentGuess(val)}
-          onPressEnter={handleGuess}
-          disabled={gameOver}
-          style={{ width: 200 }}
-          size="large"
-        />
-        <Button 
-          type="primary" 
-          icon={<SendOutlined />} 
-          size="large"
-          onClick={handleGuess}
-          disabled={gameOver || currentGuess === null}
-        >
-          Đoán
-        </Button>
-        <Button 
-          icon={<ReloadOutlined />} 
-          size="large"
-          onClick={initGame}
-        >
-          Chơi lại
-        </Button>
-      </Space>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-        <Text strong>Lịch sử dự đoán:</Text>
-        <Text type={history.length >= 8 ? 'danger' : 'secondary'}>
-          Đã dùng: {history.length} / 10 lượt
-        </Text>
+    <Card title={<Title level={3} style={{ margin: 0 }}>Bài 1: Oẳn Tù Tì</Title>} bordered={false} style={{ maxWidth: 600, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 24 }}>
+        <Text strong style={{ fontSize: 16, display: 'block', marginBottom: 16 }}>Mời bạn ra chiêu:</Text>
+        <Space size="large">
+          {danhSachLuaChon.map(item => (
+            <Button 
+              key={item.id} 
+              size="large" 
+              onClick={() => xuLyChoi(item.id)}
+              style={{ width: 100, height: 60, fontSize: 18, fontWeight: 'bold' }}
+            >
+              {item.ten}
+            </Button>
+          ))}
+        </Space>
       </div>
 
-      <List
-        bordered
-        dataSource={history}
-        renderItem={(item, index) => (
-          <List.Item>
-            <Space>
-              <Text strong>Lần {history.length - index}:</Text>
-              <Text code>{item.number}</Text>
-              <Text type={item.type}>{item.feedback}</Text>
-            </Space>
-          </List.Item>
-        )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+        <Text strong>Lịch sử các ván đấu:</Text>
+        <Button danger size="small" onClick={xoaLichSu}>Xóa lịch sử</Button>
+      </div>
+
+      <Table 
+        dataSource={lichSu} 
+        rowKey="lan" 
+        pagination={{ pageSize: 5 }} 
+        size="small"
+        columns={[
+          { title: 'Lượt', dataIndex: 'lan' },
+          { title: 'Bạn chọn', dataIndex: 'nguoiChon' },
+          { title: 'Máy chọn', dataIndex: 'mayChon' },
+          { 
+            title: 'Kết quả', 
+            dataIndex: 'ketQua', 
+            render: (kq: string) => {
+              if (kq === 'Thắng') return <Tag color="green">{kq}</Tag>;
+              if (kq === 'Thua') return <Tag color="red">{kq}</Tag>;
+              return <Tag color="default">{kq}</Tag>;
+            }
+          },
+        ]} 
       />
     </Card>
   );
