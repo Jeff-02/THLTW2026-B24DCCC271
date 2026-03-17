@@ -8,6 +8,7 @@ import { PlusOutlined, DeleteOutlined, SettingOutlined } from '@ant-design/icons
 const { Title, Text } = Typography;
 const { Option } = Select;
 
+// Định nghĩa các kiểu dữ liệu
 interface KhoiKienThuc { id: string; tenKhoi: string; }
 interface MonHoc { maMon: string; tenMon: string; soTinChi: number; }
 interface CauHoi { maCH: string; maMon: string; noiDung: string; doKho: string; maKhoi: string; }
@@ -15,37 +16,44 @@ interface ChiTietCauTruc { maKhoi: string; doKho: string; soLuong: number; }
 interface DeThi { id: string; tenDe: string; maMon: string; danhSachCauHoi: CauHoi[]; }
 
 const Bai2: React.FC = () => {
+  // --- Các State chứa dữ liệu ---
   const [danhSachKhoi, setDanhSachKhoi] = useState<KhoiKienThuc[]>([]);
   const [danhSachMon, setDanhSachMon] = useState<MonHoc[]>([]);
   const [nganHangCauHoi, setNganHangCauHoi] = useState<CauHoi[]>([]);
   const [danhSachDeThi, setDanhSachDeThi] = useState<DeThi[]>([]);
 
+  // State bộ lọc tìm kiếm
   const [locMonHoc, setLocMonHoc] = useState<string>('');
   const [locDoKho, setLocDoKho] = useState<string>('');
   const [locKhoiKT, setLocKhoiKT] = useState<string>('');
 
+  // State quản lý việc hiển thị (bật/tắt) các Modal (Sử dụng cho visible)
   const [hienThiModalKhoi, setHienThiModalKhoi] = useState(false);
   const [hienThiModalMon, setHienThiModalMon] = useState(false);
   const [hienThiModalCauHoi, setHienThiModalCauHoi] = useState(false);
   const [hienThiModalTaoDe, setHienThiModalTaoDe] = useState(false);
   const [hienThiModalXemDe, setHienThiModalXemDe] = useState(false);
 
+  // State phục vụ tạo đề thi
   const [cauTrucDangTao, setCauTrucDangTao] = useState<ChiTietCauTruc[]>([]);
   const [monHocDuocChonDeTao, setMonHocDuocChonDeTao] = useState<string>('');
   const [deThiDangXem, setDeThiDangXem] = useState<DeThi | null>(null);
 
+  // Form của Ant Design
   const [formKhoi] = Form.useForm();
   const [formMon] = Form.useForm();
   const [formCauHoi] = Form.useForm();
   const [formChiTietDe] = Form.useForm();
   const [formLuuCauTruc] = Form.useForm();
 
+  // Hàm chạy 1 lần lúc trang web vừa tải xong để lấy dữ liệu từ localStorage
   useEffect(() => {
     let dlKhoi = localStorage.getItem('bt2_khoi');
     let dlMon = localStorage.getItem('bt2_mon');
     let dlCauHoi = localStorage.getItem('bt2_cauhoi');
     let dlDeThi = localStorage.getItem('bt2_dethi');
 
+    // Nạp Khối kiến thức
     if (dlKhoi) {
       setDanhSachKhoi(JSON.parse(dlKhoi));
     } else {
@@ -57,6 +65,7 @@ const Bai2: React.FC = () => {
       localStorage.setItem('bt2_khoi', JSON.stringify(khoiMacDinh));
     }
 
+    // Nạp Môn học
     if (dlMon) {
       setDanhSachMon(JSON.parse(dlMon));
     } else {
@@ -69,12 +78,13 @@ const Bai2: React.FC = () => {
     if (dlDeThi) setDanhSachDeThi(JSON.parse(dlDeThi));
   }, []);
 
+  // --- CÁC HÀM THÊM / XÓA ---
   const xuLyThemKhoi = (values: any) => {
     let khoiMoi = { id: 'K' + Date.now(), tenKhoi: values.tenKhoi };
     let mangMoi = [...danhSachKhoi, khoiMoi];
     
     setDanhSachKhoi(mangMoi);
-    localStorage.setItem('bt2_khoi', JSON.stringify(mangMoi)); 
+    localStorage.setItem('bt2_khoi', JSON.stringify(mangMoi)); // Sinh viên lưu trực tiếp
     setHienThiModalKhoi(false);
     formKhoi.resetFields();
     message.success('Thêm khối kiến thức thành công');
@@ -120,10 +130,12 @@ const Bai2: React.FC = () => {
     message.success('Đã xóa câu hỏi');
   };
 
+  // --- CHỨC NĂNG TẠO ĐỀ THI ---
   const themYeuCauVaoCauTruc = (values: any) => {
     let mangTam = [...cauTrucDangTao];
     let daCoTrongMang = false;
 
+    // Tìm xem đã có khối này và độ khó này trong bảng chưa
     for (let i = 0; i < mangTam.length; i++) {
       if (mangTam[i].maKhoi === values.maKhoi && mangTam[i].doKho === values.doKho) {
         mangTam[i].soLuong = mangTam[i].soLuong + values.soLuong;
@@ -159,10 +171,12 @@ const Bai2: React.FC = () => {
     let kiemTraDuCauHoi = true;
     let cauBaoLoi = "";
 
+    // Duyệt qua từng dòng yêu cầu trong cấu trúc đề
     for (let i = 0; i < cauTrucDangTao.length; i++) {
       let yeuCau = cauTrucDangTao[i];
       let danhSachPhuHop: CauHoi[] = [];
 
+      // Lọc thủ công tìm câu hỏi phù hợp trong ngân hàng
       for (let j = 0; j < nganHangCauHoi.length; j++) {
         let ch = nganHangCauHoi[j];
         if (ch.maMon === monHocDuocChonDeTao && ch.maKhoi === yeuCau.maKhoi && ch.doKho === yeuCau.doKho) {
@@ -170,13 +184,16 @@ const Bai2: React.FC = () => {
         }
       }
 
+      // Kiểm tra xem số lượng câu hỏi trong kho có đủ không
       if (danhSachPhuHop.length < yeuCau.soLuong) {
         kiemTraDuCauHoi = false;
         cauBaoLoi = "Lỗi: Mức độ " + yeuCau.doKho + " (Khối " + layTenKhoi(yeuCau.maKhoi) + ") yêu cầu " + yeuCau.soLuong + " câu nhưng kho chỉ có " + danhSachPhuHop.length + " câu.";
-        break; 
+        break; // Dừng vòng lặp ngay
       } else {
+        // Trộn ngẫu nhiên câu hỏi bằng sort và random (Cách sinh viên hay làm)
         let cauHoiDaTron = danhSachPhuHop.sort(() => 0.5 - Math.random());
         
+        // Bốc đủ số lượng câu hỏi yêu cầu bỏ vào đề thi
         for (let k = 0; k < yeuCau.soLuong; k++) {
           danhSachCauHoiCuaDeMoi.push(cauHoiDaTron[k]);
         }
@@ -188,6 +205,7 @@ const Bai2: React.FC = () => {
       return;
     }
 
+    // Đủ câu hỏi -> Tiến hành lưu Đề thi
     let deThiMoi = {
       id: 'DE' + Date.now(),
       tenDe: values.tenDeThi,
@@ -205,6 +223,7 @@ const Bai2: React.FC = () => {
     formLuuCauTruc.resetFields();
   };
 
+  // --- CÁC HÀM TIỆN ÍCH TÌM TÊN ---
   const layTenMon = (maMon: string) => {
     for(let i=0; i<danhSachMon.length; i++) {
       if(danhSachMon[i].maMon === maMon) return danhSachMon[i].tenMon;
@@ -219,6 +238,7 @@ const Bai2: React.FC = () => {
     return idKhoi;
   };
 
+  // --- LỌC CÂU HỎI HIỂN THỊ (Viết kiểu thủ công dễ hiểu) ---
   const layDanhSachCauHoiHienThi = () => {
     let ketQua = [];
     for(let i = 0; i < nganHangCauHoi.length; i++) {
@@ -240,6 +260,7 @@ const Bai2: React.FC = () => {
     <Card title={<Title level={3} style={{ margin: 0 }}>Bài 2: Ngân hàng câu hỏi & Đề thi</Title>} bordered={false}>
       <Tabs defaultActiveKey="3">
         
+        {/* --- TAB 1: KHỐI KIẾN THỨC --- */}
         <Tabs.TabPane tab="1. Khối kiến thức" key="1">
           <Button type="primary" icon={<PlusOutlined />} onClick={() => setHienThiModalKhoi(true)} style={{ marginBottom: 16 }}>Thêm khối kiến thức</Button>
           <Table dataSource={danhSachKhoi} rowKey="id" pagination={{ pageSize: 5 }} columns={[
@@ -248,7 +269,8 @@ const Bai2: React.FC = () => {
           ]} />
         </Tabs.TabPane>
 
-ư        <Tabs.TabPane tab="2. Môn học" key="2">
+        {/* --- TAB 2: MÔN HỌC --- */}
+        <Tabs.TabPane tab="2. Môn học" key="2">
           <Button type="primary" icon={<PlusOutlined />} onClick={() => setHienThiModalMon(true)} style={{ marginBottom: 16 }}>Thêm môn học</Button>
           <Table dataSource={danhSachMon} rowKey="maMon" pagination={{ pageSize: 5 }} columns={[ 
             { title: 'Mã môn', dataIndex: 'maMon' }, 
@@ -257,6 +279,7 @@ const Bai2: React.FC = () => {
           ]} />
         </Tabs.TabPane>
 
+        {/* --- TAB 3: NGÂN HÀNG CÂU HỎI --- */}
         <Tabs.TabPane tab="3. Ngân hàng câu hỏi" key="3">
           <Space style={{ marginBottom: 16 }}>
             <Select placeholder="Lọc theo môn" allowClear style={{ width: 150 }} onChange={val => setLocMonHoc(val || '')}>
@@ -290,7 +313,8 @@ const Bai2: React.FC = () => {
           ]} />
         </Tabs.TabPane>
 
-ư        <Tabs.TabPane tab="4. Quản lý Đề thi" key="4">
+        {/* --- TAB 4: QUẢN LÝ ĐỀ THI --- */}
+        <Tabs.TabPane tab="4. Quản lý Đề thi" key="4">
           <Button type="primary" icon={<SettingOutlined />} onClick={() => setHienThiModalTaoDe(true)} style={{ marginBottom: 16 }}>Tạo Đề Thi Mới</Button>
           <Table dataSource={danhSachDeThi} rowKey="id" pagination={{ pageSize: 5 }} columns={[
             { title: 'Mã Đề', dataIndex: 'id' },
@@ -302,7 +326,8 @@ const Bai2: React.FC = () => {
         </Tabs.TabPane>
       </Tabs>
 
-ư      <Modal title="Thêm Khối Kiến Thức" visible={hienThiModalKhoi} onCancel={() => setHienThiModalKhoi(false)} onOk={() => formKhoi.submit()} destroyOnClose>
+      {/* --- CÁC BẢNG MODAL (Dùng visible thay vì open) --- */}
+      <Modal title="Thêm Khối Kiến Thức" visible={hienThiModalKhoi} onCancel={() => setHienThiModalKhoi(false)} onOk={() => formKhoi.submit()} destroyOnClose>
         <Form form={formKhoi} layout="vertical" onFinish={xuLyThemKhoi}>
           <Form.Item name="tenKhoi" label="Tên Khối" rules={[{required: true, message: 'Nhập tên khối'}]}><Input /></Form.Item>
         </Form>
@@ -337,7 +362,8 @@ const Bai2: React.FC = () => {
         </Form>
       </Modal>
 
-=      <Modal title="Thiết Lập Cấu Trúc & Tạo Đề" visible={hienThiModalTaoDe} width={700} onCancel={() => setHienThiModalTaoDe(false)} onOk={() => formLuuCauTruc.submit()} okText="Sinh Đề Thi" destroyOnClose>
+      {/* MODAL TẠO ĐỀ THI LỚN */}
+      <Modal title="Thiết Lập Cấu Trúc & Tạo Đề" visible={hienThiModalTaoDe} width={700} onCancel={() => setHienThiModalTaoDe(false)} onOk={() => formLuuCauTruc.submit()} okText="Sinh Đề Thi" destroyOnClose>
         <div style={{ marginBottom: 16 }}>
           <Text strong>1. Chọn môn học cần tạo đề:</Text>
           <Select placeholder="Bấm để chọn môn" style={{ width: '100%', marginTop: 8 }} onChange={val => { setMonHocDuocChonDeTao(val); setCauTrucDangTao([]); }}>
@@ -372,6 +398,7 @@ const Bai2: React.FC = () => {
         )}
       </Modal>
 
+      {/* MODAL XEM LẠI ĐỀ THI ĐÃ TẠO */}
       <Modal title={`Chi tiết Đề Thi: ${deThiDangXem?.tenDe}`} visible={hienThiModalXemDe} width={700} footer={[<Button key="dong" onClick={() => setHienThiModalXemDe(false)}>Đóng</Button>]} onCancel={() => setHienThiModalXemDe(false)}>
         {deThiDangXem && deThiDangXem.danhSachCauHoi.map((ch, index) => (
           <div key={ch.maCH} style={{ padding: 12, borderBottom: '1px solid #f0f0f0' }}>

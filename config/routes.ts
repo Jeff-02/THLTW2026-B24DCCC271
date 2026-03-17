@@ -23,6 +23,7 @@
 		name: 'Dashboard',
 		component: './TrangChu',
 		icon: 'HomeOutlined',
+		hideInMenu: true,
 	},
 	{
 		path: '/gioi-thieu',
@@ -35,24 +36,50 @@
 		name: 'RandomUser',
 		component: './RandomUser',
 		icon: 'ArrowsAltOutlined',
+		hideInMenu: true,
 	},
 	{
 		path: '/todo-list',
 		name: 'TodoList',
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
+		hideInMenu: true,
 	},
-
 	{
         path: '/bai-1',
         name: 'Bài 1',   
-        component: './bai1', 
+        component: './bai1',
+		hideInMenu: true,
     },
     {
         path: '/bai-2',
         name: 'Bài 2',   
-        component: './bai2', 
+        component: './bai2',
+		hideInMenu: true,
     },
+
+	///////////////////////////////////
+	// HỆ THỐNG QUẢN LÝ DỊCH VỤ
+	{
+		path: '/quan-ly-nhan-vien-dich-vu',
+		name: 'Quản lý Nhân viên & Dịch vụ',
+		component: './QLDichVu/NhanVienDichVu',
+	},
+	{
+		path: '/quan-ly-lich-hen',
+		name: 'Quản lý Lịch hẹn',
+		component: './QLDichVu/LichHen',
+	},
+	{
+		path: '/danh-gia-dich-vu',
+		name: 'Đánh giá Dịch vụ',
+		component: './QLDichVu/DanhGia',
+	},
+	{
+		path: '/thong-ke-bao-cao',
+		name: 'Thống kê & Báo cáo',
+		component: './QLDichVu/ThongKe',
+	},
 
 	// DANH MUC HE THONG
 	// {
