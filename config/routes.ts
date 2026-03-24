@@ -59,26 +59,31 @@
     },
 
 	///////////////////////////////////
-	// HỆ THỐNG QUẢN LÝ DỊCH VỤ
+	// HỆ THỐNG QUẢN LÝ VĂN BẰNG
 	{
-		path: '/quan-ly-nhan-vien-dich-vu',
-		name: 'Quản lý Nhân viên & Dịch vụ',
-		component: './QLDichVu/NhanVienDichVu',
+		path: '/quan-ly-so-van-bang',
+		name: 'Quản lý sổ văn bằng',
+		component: './QLDichVu/QuanLySoVanBang',
 	},
 	{
-		path: '/quan-ly-lich-hen',
-		name: 'Quản lý Lịch hẹn',
-		component: './QLDichVu/LichHen',
+		path: '/quan-ly-quyet-dinh',
+		name: 'Quyết định tốt nghiệp',
+		component: './QLDichVu/QuanLyQuyetDinh',
 	},
 	{
-		path: '/danh-gia-dich-vu',
-		name: 'Đánh giá Dịch vụ',
-		component: './QLDichVu/DanhGia',
+		path: '/cau-hinh-bieu-mau-phu-luc',
+		name: 'Cấu hình biểu mẫu phụ lục văn bằng',
+		component: './QLDichVu/CauHinhPhuLuc',
 	},
 	{
-		path: '/thong-ke-bao-cao',
-		name: 'Thống kê & Báo cáo',
-		component: './QLDichVu/ThongKe',
+		path: '/thong-tin-van-bang',
+		name: 'Thông tin văn bằng',
+		component: './QLDichVu/ThongTinVanBang',
+	},
+	{
+		path: '/tra-cuu-van-bang',
+		name: 'Tra cứu văn bằng',
+		component: './QLDichVu/TraCuuVanBang',
 	},
 
 	// DANH MUC HE THONG
