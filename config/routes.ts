@@ -59,31 +59,26 @@
     },
 
 	///////////////////////////////////
-	// HỆ THỐNG QUẢN LÝ VĂN BẰNG
+	// HỆ THỐNG QUẢN LÝ CÂU LẠC BỘ
 	{
-		path: '/quan-ly-so-van-bang',
-		name: 'Quản lý sổ văn bằng',
-		component: './QLDichVu/QuanLySoVanBang',
+		path: '/quan-ly-cau-lac-bo',
+		name: 'Quản lý câu lạc bộ',
+		component: './QLCauLacBo/QuanLyCauLacBo',
 	},
 	{
-		path: '/quan-ly-quyet-dinh',
-		name: 'Quyết định tốt nghiệp',
-		component: './QLDichVu/QuanLyQuyetDinh',
+		path: '/quan-ly-don-dang-ky',
+		name: 'Quản lý đơn đăng ký',
+		component: './QLCauLacBo/QuanLyDonDangKy',
 	},
 	{
-		path: '/cau-hinh-bieu-mau-phu-luc',
-		name: 'Cấu hình biểu mẫu phụ lục văn bằng',
-		component: './QLDichVu/CauHinhPhuLuc',
+		path: '/quan-ly-thanh-vien',
+		name: 'Quản lý thành viên',
+		component: './QLCauLacBo/QuanLyThanhVien',
 	},
 	{
-		path: '/thong-tin-van-bang',
-		name: 'Thông tin văn bằng',
-		component: './QLDichVu/ThongTinVanBang',
-	},
-	{
-		path: '/tra-cuu-van-bang',
-		name: 'Tra cứu văn bằng',
-		component: './QLDichVu/TraCuuVanBang',
+		path: '/bao-cao-thong-ke',
+		name: 'Báo cáo thống kê',
+		component: './QLCauLacBo/BaoCaoThongKe',
 	},
 
 	// DANH MUC HE THONG
