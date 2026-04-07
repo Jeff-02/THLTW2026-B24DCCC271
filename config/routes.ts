@@ -59,26 +59,37 @@
     },
 
 	///////////////////////////////////
-	// HỆ THỐNG QUẢN LÝ CÂU LẠC BỘ
+	// TRAVEL PLANNER
 	{
-		path: '/quan-ly-cau-lac-bo',
-		name: 'Quản lý câu lạc bộ',
-		component: './QLCauLacBo/QuanLyCauLacBo',
-	},
-	{
-		path: '/quan-ly-don-dang-ky',
-		name: 'Quản lý đơn đăng ký',
-		component: './QLCauLacBo/QuanLyDonDangKy',
-	},
-	{
-		path: '/quan-ly-thanh-vien',
-		name: 'Quản lý thành viên',
-		component: './QLCauLacBo/QuanLyThanhVien',
-	},
-	{
-		path: '/bao-cao-thong-ke',
-		name: 'Báo cáo thống kê',
-		component: './QLCauLacBo/BaoCaoThongKe',
+		path: '/travel-planner',
+		name: 'Travel Planner',
+		icon: 'EnvironmentOutlined',
+		routes: [
+			{
+				path: '/travel-planner',
+				redirect: '/travel-planner/home',
+			},
+			{
+				path: '/travel-planner/home',
+				name: 'Khám phá điểm đến',
+				component: './TravelPlanner/Home',
+			},
+			{
+				path: '/travel-planner/itinerary',
+				name: 'Tạo lịch trình',
+				component: './TravelPlanner/Itinerary',
+			},
+			{
+				path: '/travel-planner/budget',
+				name: 'Quản lý ngân sách',
+				component: './TravelPlanner/Budget',
+			},
+			{
+				path: '/travel-planner/admin',
+				name: 'Admin',
+				component: './TravelPlanner/Admin',
+			},
+		],
 	},
 
 	// DANH MUC HE THONG
