@@ -59,37 +59,12 @@
     },
 
 	///////////////////////////////////
-	// TRAVEL PLANNER
+	// QUẢN LÝ KHÓA HỌC ONLINE
 	{
-		path: '/travel-planner',
-		name: 'Travel Planner',
-		icon: 'EnvironmentOutlined',
-		routes: [
-			{
-				path: '/travel-planner',
-				redirect: '/travel-planner/home',
-			},
-			{
-				path: '/travel-planner/home',
-				name: 'Khám phá điểm đến',
-				component: './TravelPlanner/Home',
-			},
-			{
-				path: '/travel-planner/itinerary',
-				name: 'Tạo lịch trình',
-				component: './TravelPlanner/Itinerary',
-			},
-			{
-				path: '/travel-planner/budget',
-				name: 'Quản lý ngân sách',
-				component: './TravelPlanner/Budget',
-			},
-			{
-				path: '/travel-planner/admin',
-				name: 'Admin',
-				component: './TravelPlanner/Admin',
-			},
-		],
+		path: '/quan-ly-khoa-hoc',
+		name: 'Quản lý khóa học',
+		icon: 'BookOutlined',
+		component: './QuanLyKhoaHoc',
 	},
 
 	// DANH MUC HE THONG
