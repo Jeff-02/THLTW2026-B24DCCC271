@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import Footer from '@/components/Footer/Footer';
 import LoginWithKeycloak from '@/pages/user/Login/KeycloakLogin';
 import { adminlogin, getUserInfo } from '@/services/base/api';
 import { keycloakAuthority } from '@/utils/ip';

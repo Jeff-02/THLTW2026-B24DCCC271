@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import Footer from '@/components/Footer/Footer';
 import { landingUrl } from '@/services/base/constant';
 import { Result } from 'antd';
 import { useEffect } from 'react';

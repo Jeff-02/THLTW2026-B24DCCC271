@@ -19,11 +19,34 @@
 	///////////////////////////////////
 	// DEFAULT MENU
 	{
+		path: '/',
+		name: 'Trang chủ',
+		component: './TrangChu',
+		icon: 'HomeOutlined',
+	},
+	{
 		path: '/dashboard',
 		name: 'Dashboard',
 		component: './TrangChu',
 		icon: 'HomeOutlined',
 		hideInMenu: true,
+	},
+	{
+		path: '/about',
+		name: 'Giới thiệu',
+		component: './About',
+		icon: 'UserOutlined',
+	},
+	{
+		path: '/post/:slug',
+		component: './PostDetail',
+		hideInMenu: true,
+	},
+	{
+		path: '/admin/tags',
+		name: 'Quản lý thẻ',
+		component: './TagManagement',
+		icon: 'TagOutlined',
 	},
 	{
 		path: '/gioi-thieu',
@@ -59,12 +82,12 @@
     },
 
 	///////////////////////////////////
-	// QUẢN LÝ KHÓA HỌC ONLINE
+	// BLOG CÁ NHÂN
 	{
-		path: '/quan-ly-khoa-hoc',
-		name: 'Quản lý khóa học',
-		icon: 'BookOutlined',
-		component: './QuanLyKhoaHoc',
+		path: '/blog-ca-nhan',
+		name: 'Blog cá nhân',
+		icon: 'FileTextOutlined',
+		component: './BlogCaNhan',
 	},
 
 	// DANH MUC HE THONG
