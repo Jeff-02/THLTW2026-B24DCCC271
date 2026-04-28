@@ -32,21 +32,28 @@
 		hideInMenu: true,
 	},
 	{
-		path: '/about',
-		name: 'Giới thiệu',
-		component: './About',
-		icon: 'UserOutlined',
+		path: '/training-log',
+		name: 'Nhật ký tập luyện',
+		component: './Fitness/TrainingLog',
+		icon: 'OrderedListOutlined',
 	},
 	{
-		path: '/post/:slug',
-		component: './PostDetail',
-		hideInMenu: true,
+		path: '/health-log',
+		name: 'Nhật ký sức khỏe',
+		component: './Fitness/HealthLog',
+		icon: 'HeartOutlined',
 	},
 	{
-		path: '/admin/tags',
-		name: 'Quản lý thẻ',
-		component: './TagManagement',
-		icon: 'TagOutlined',
+		path: '/goals',
+		name: 'Quản lý mục tiêu',
+		component: './Fitness/Goals',
+		icon: 'FlagOutlined',
+	},
+	{
+		path: '/exercise-library',
+		name: 'Thư viện bài tập',
+		component: './Fitness/Library',
+		icon: 'AppstoreOutlined',
 	},
 	{
 		path: '/gioi-thieu',
@@ -80,15 +87,6 @@
         component: './bai2',
 		hideInMenu: true,
     },
-
-	///////////////////////////////////
-	// BLOG CÁ NHÂN
-	{
-		path: '/blog-ca-nhan',
-		name: 'Blog cá nhân',
-		icon: 'FileTextOutlined',
-		component: './BlogCaNhan',
-	},
 
 	// DANH MUC HE THONG
 	// {
