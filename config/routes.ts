@@ -20,9 +20,7 @@
 	// DEFAULT MENU
 	{
 		path: '/',
-		name: 'Trang chủ',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		redirect: '/todo-list',
 	},
 	{
 		path: '/dashboard',
@@ -30,30 +28,6 @@
 		component: './TrangChu',
 		icon: 'HomeOutlined',
 		hideInMenu: true,
-	},
-	{
-		path: '/training-log',
-		name: 'Nhật ký tập luyện',
-		component: './Fitness/TrainingLog',
-		icon: 'OrderedListOutlined',
-	},
-	{
-		path: '/health-log',
-		name: 'Nhật ký sức khỏe',
-		component: './Fitness/HealthLog',
-		icon: 'HeartOutlined',
-	},
-	{
-		path: '/goals',
-		name: 'Quản lý mục tiêu',
-		component: './Fitness/Goals',
-		icon: 'FlagOutlined',
-	},
-	{
-		path: '/exercise-library',
-		name: 'Thư viện bài tập',
-		component: './Fitness/Library',
-		icon: 'AppstoreOutlined',
 	},
 	{
 		path: '/gioi-thieu',
@@ -70,10 +44,9 @@
 	},
 	{
 		path: '/todo-list',
-		name: 'TodoList',
+		name: 'Theo dõi công việc',
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
-		hideInMenu: true,
 	},
 	{
         path: '/bai-1',
